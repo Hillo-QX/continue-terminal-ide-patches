@@ -26,6 +26,12 @@ patches/continue-terminal-ide-20260823
    - 将图片路径拖进输入框并回车，图片作为原始图片附件发送；
    - 将文本文件路径拖进输入框并回车，文件作为附件上下文发送；
    - 原文件没有被移动、复制或覆盖。
+6. 检查安装器输出的 MCP 模板路径：
+   - macOS：`~/.continue/qxen-mcp/config.example.generated.yaml`
+   - Windows：`%USERPROFILE%\.continue\qxen-mcp\config.example.generated.yaml`
+   将模板中的 `mcpServers` 合并到 Continue 配置后，重启 Continue。
+7. 验收 MCP：工具列表中应出现 `web_search`、`dispatcher_health` 等工具。
+   `Search` 是项目代码搜索，`Fetch` 是已知 URL 抓取；不要把它们当作互联网搜索。
 
 约束：
 
@@ -34,4 +40,5 @@ patches/continue-terminal-ide-20260823
 - 不要执行 OCR、PDF/Word 转换或创建 continue-converted 目录；
 - 如果安装失败，保留错误输出，不要删除备份；
 - 只修改 Continue CLI 1.5.47 的补丁目标文件。
+- 不要把真实 API key、token 或个人配置文件提交到 Git；模板中的 secrets 引用保持不变。
 ```

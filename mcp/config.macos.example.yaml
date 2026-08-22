@@ -1,0 +1,32 @@
+# Merge this block into ~/.continue/config.yaml under mcpServers.
+# The installer replaces __MCP_DIR__ with ~/.continue/qxen-mcp.
+mcpServers:
+  - name: Continue Web Search
+    command: python3
+    args:
+      - __MCP_DIR__/web_search_mcp.py
+    connectionTimeout: 30000
+  - name: Qwen Dispatcher
+    command: python3
+    args:
+      - __MCP_DIR__/qwen_dispatcher_mcp.py
+    env:
+      DASHSCOPE_API_KEY: "${{ secrets.DASHSCOPE_API_KEY }}"
+    connectionTimeout: 30000
+  - name: Continue Compact (Qwen3.8 27B)
+    command: python3
+    args:
+      - __MCP_DIR__/continue_compact_mcp.py
+    env:
+      DASHSCOPE_API_KEY: "${{ secrets.DASHSCOPE_API_KEY }}"
+    connectionTimeout: 30000
+  - name: Qwen Swarm
+    command: python3
+    args:
+      - __MCP_DIR__/continue_qwen_swarm_mcp.py
+    env:
+      DASHSCOPE_API_KEY: "${{ secrets.DASHSCOPE_API_KEY }}"
+    connectionTimeout: 30000
+
+# Kimi is optional because the Kimi CLI is not part of Continue. See
+# config.kimi.optional.yaml and set KIMI_BIN/KIMI_ROLE_FILE when installed.

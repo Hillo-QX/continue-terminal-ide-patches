@@ -13,6 +13,9 @@
 - PNG/JPG/GIF/WEBP 拖入后作为图片内容发送；
 - Continue TUI 中文化显示；
 - 不生成转换副本，不移动或覆盖原文件。
+- 同步 macOS/Windows 的 Qwen Dispatcher、Compact、Qwen Swarm MCP；
+- 新增 `web_search` MCP tool（互联网搜索，不是代码搜索）；
+- 首条消息等待一个有界的 MCP 工具发现窗口，避免工具列表永远少一拍。
 
 ## 安装
 
@@ -23,6 +26,8 @@
 ```
 
 脚本会先备份当前 Continue CLI 的 `src` 和 `dist`，再安装补丁。安装完成后需要关闭并重新打开 Continue TUI。
+同时会把 MCP 文件安装到 `~/.continue/qxen-mcp`，并生成配置模板；请按提示把模板的
+`mcpServers` 合并到 `~/.continue/config.yaml`，脚本不会覆盖你的现有配置。
 
 ## Windows 安装
 
@@ -34,6 +39,8 @@ Set-ExecutionPolicy -Scope Process Bypass
 ```
 
 也可以直接双击 `install_continue_patch.cmd`。脚本会创建 `%USERPROFILE%\.continue\qxen-patch-backups\` 下的 ZIP 备份。
+MCP 文件会安装到 `%USERPROFILE%\.continue\qxen-mcp`，并生成 Windows 配置模板；请按提示
+合并到 Continue 的 `config.yaml`。
 
 也可以把 [`INSTALL_PROMPT_CN.md`](./INSTALL_PROMPT_CN.md) 交给 Codex 或 Luna 执行。
 
@@ -55,3 +62,5 @@ cn --help
 ```
 
 进入 TUI 后验证 `/聊天`、`/工作环境`，并拖入一个图片或文本文件测试附件发送。
+合并 MCP 配置并重启后，在工具列表/日志中应看到 `web_search`；它用于互联网搜索，
+Continue 内置的 `Search` 仍然只用于项目代码搜索，`Fetch` 仍然只抓取已知 URL。

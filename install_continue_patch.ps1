@@ -50,6 +50,15 @@ if (Test-Path $sourceOverlay) {
     Copy-Item (Join-Path $sourceOverlay "*") (Join-Path $cliDir "src") -Recurse -Force
 }
 
+$mcpDir = Join-Path $env:USERPROFILE ".continue\qxen-mcp"
+New-Item -ItemType Directory -Force -Path $mcpDir | Out-Null
+Copy-Item (Join-Path $PatchDir "mcp\*") $mcpDir -Recurse -Force
+$mcpDirYaml = $mcpDir.Replace("\", "/")
+$windowsTemplate = Get-Content (Join-Path $PatchDir "mcp\config.windows.example.yaml") -Raw
+$kimiTemplate = Get-Content (Join-Path $PatchDir "mcp\config.kimi.optional.yaml") -Raw
+$windowsTemplate.Replace("__MCP_DIR__", $mcpDirYaml) | Set-Content (Join-Path $mcpDir "config.example.generated.yaml") -Encoding UTF8
+$kimiTemplate.Replace("__MCP_DIR__", $mcpDirYaml) | Set-Content (Join-Path $mcpDir "config.kimi.optional.generated.yaml") -Encoding UTF8
+
 node --check (Join-Path $cliDir "dist\index.js")
 $bundleText = Get-Content (Join-Path $cliDir "dist\index.js") -Raw
 if ($bundleText -notmatch "WorkspaceSelector") {
@@ -62,4 +71,6 @@ if ($bundleText -notmatch "DROPPED_IMAGE") {
 Write-Host "Continue Terminal IDE Windows 补丁安装完成。"
 Write-Host "版本：$cliVersion"
 Write-Host "备份：$backupArchive"
+Write-Host "MCP 文件：$mcpDir"
+Write-Host "配置模板：$(Join-Path $mcpDir "config.example.generated.yaml")（合并到 Continue config.yaml）"
 Write-Host "请关闭当前 Continue TUI 后重新启动。"

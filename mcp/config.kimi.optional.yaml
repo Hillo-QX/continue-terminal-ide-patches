@@ -1,0 +1,12 @@
+# Optional entry for either platform. Add it only after installing Kimi CLI.
+# The bundled server is portable and reads KIMI_BIN/KIMI_ROLE_FILE instead of
+# using this Mac's absolute paths.
+- name: Kimi Expert
+  command: node
+  args:
+    - __MCP_DIR__/kimi_expert_mcp.mjs
+  env:
+    KIMI_BIN: kimi
+    KIMI_ROLE_FILE: __MCP_DIR__/kimi_expert_role.md
+    CONTINUE_WORKSPACE: __MCP_DIR__
+  connectionTimeout: 30000

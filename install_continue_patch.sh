@@ -44,6 +44,14 @@ if [[ -d "${PATCH_DIR}/source-overlay/src" ]]; then
   cp -R "${PATCH_DIR}/source-overlay/src/." "${CLI_DIR}/src/"
 fi
 
+MCP_DIR="${HOME}/.continue/qxen-mcp"
+mkdir -p "${MCP_DIR}"
+cp -R "${PATCH_DIR}/mcp/." "${MCP_DIR}/"
+sed "s|__MCP_DIR__|${MCP_DIR}|g" \
+  "${PATCH_DIR}/mcp/config.macos.example.yaml" > "${MCP_DIR}/config.example.generated.yaml"
+sed "s|__MCP_DIR__|${MCP_DIR}|g" \
+  "${PATCH_DIR}/mcp/config.kimi.optional.yaml" > "${MCP_DIR}/config.kimi.optional.generated.yaml"
+
 node --check "${CLI_DIR}/dist/index.js"
 if ! grep -q "WorkspaceSelector" "${CLI_DIR}/dist/index.js"; then
   print -u2 "验收失败：运行版未包含 WorkspaceSelector。"
@@ -57,4 +65,6 @@ fi
 print "Continue Terminal IDE 补丁安装完成。"
 print "版本：${CLI_VERSION}"
 print "备份：${BACKUP_DIR}/continue-cli-before-patch.tar.gz"
+print "MCP 文件：${MCP_DIR}"
+print "配置模板：${MCP_DIR}/config.example.generated.yaml（合并到 ~/.continue/config.yaml）"
 print "请关闭当前 Continue TUI 后重新启动。"

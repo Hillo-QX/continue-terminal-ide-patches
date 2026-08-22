@@ -1,0 +1,36 @@
+# Merge this block into %USERPROFILE%/.continue/config.yaml under mcpServers.
+# The installer replaces __MCP_DIR__ with %USERPROFILE%/.continue/qxen-mcp.
+mcpServers:
+  - name: Continue Web Search
+    command: py
+    args:
+      - -3
+      - __MCP_DIR__/web_search_mcp.py
+    connectionTimeout: 30000
+  - name: Qwen Dispatcher
+    command: py
+    args:
+      - -3
+      - __MCP_DIR__/qwen_dispatcher_mcp.py
+    env:
+      DASHSCOPE_API_KEY: "${{ secrets.DASHSCOPE_API_KEY }}"
+    connectionTimeout: 30000
+  - name: Continue Compact (Qwen3.8 27B)
+    command: py
+    args:
+      - -3
+      - __MCP_DIR__/continue_compact_mcp.py
+    env:
+      DASHSCOPE_API_KEY: "${{ secrets.DASHSCOPE_API_KEY }}"
+    connectionTimeout: 30000
+  - name: Qwen Swarm
+    command: py
+    args:
+      - -3
+      - __MCP_DIR__/continue_qwen_swarm_mcp.py
+    env:
+      DASHSCOPE_API_KEY: "${{ secrets.DASHSCOPE_API_KEY }}"
+    connectionTimeout: 30000
+
+# Kimi is optional and disabled by default on Windows. See
+# config.kimi.optional.yaml if a compatible kimi executable is installed.
