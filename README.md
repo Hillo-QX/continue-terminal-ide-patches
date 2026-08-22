@@ -1,0 +1,46 @@
+# Continue Terminal IDE 补丁（2026-08-23）
+
+这是今天对 Continue CLI/TUI（`@continuedev/cli` **1.5.47**）的运行版补丁包。
+
+## 功能
+
+- `/chat`、`/聊天`：切换聊天会话；
+- `/workspace`、`/工作环境`：选择工作目录；
+- 保存最近工作目录到 `~/.continue/workspaces.json`；
+- 选择工作目录后继续当前会话或开启新会话；
+- 底部显示当前工作环境和路径；
+- 拖入文件路径后直接作为原始附件发送；
+- PNG/JPG/GIF/WEBP 拖入后作为图片内容发送；
+- Continue TUI 中文化显示；
+- 不生成转换副本，不移动或覆盖原文件。
+
+## 安装
+
+在安装 Continue CLI 1.5.47 后，进入本目录执行：
+
+```bash
+./install_continue_patch.sh
+```
+
+脚本会先备份当前 Continue CLI 的 `src` 和 `dist`，再安装补丁。安装完成后需要关闭并重新打开 Continue TUI。
+
+也可以把 [`INSTALL_PROMPT_CN.md`](./INSTALL_PROMPT_CN.md) 交给 Codex 或 Luna 执行。
+
+## 回滚
+
+每次安装都会生成备份目录：
+
+```text
+~/.continue/qxen-patch-backups/<时间戳>/continue-cli-before-patch.tar.gz
+```
+
+恢复前请先退出 Continue，再解压备份覆盖对应 CLI 目录。
+
+## 验收
+
+```bash
+cn --version
+cn --help
+```
+
+进入 TUI 后验证 `/聊天`、`/工作环境`，并拖入一个图片或文本文件测试附件发送。
