@@ -14,6 +14,9 @@ patches/continue-terminal-ide-20260823
    `npm install -g @continuedev/cli@1.5.47`
 2. 进入补丁目录，执行：
    `./install_continue_patch.sh`
+   如果是 Windows，则在 PowerShell 执行：
+   `Set-ExecutionPolicy -Scope Process Bypass; .\install_continue_patch.ps1`
+   或双击 `install_continue_patch.cmd`。
 3. 确认脚本输出“补丁安装完成”，并检查 `cn --version` 仍为 1.5.47。
 4. 关闭已经运行的 Continue TUI，再重新启动 Continue。
 5. 验收以下功能：

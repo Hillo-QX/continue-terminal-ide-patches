@@ -24,6 +24,17 @@
 
 脚本会先备份当前 Continue CLI 的 `src` 和 `dist`，再安装补丁。安装完成后需要关闭并重新打开 Continue TUI。
 
+## Windows 安装
+
+在 PowerShell 中执行：
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\install_continue_patch.ps1
+```
+
+也可以直接双击 `install_continue_patch.cmd`。脚本会创建 `%USERPROFILE%\.continue\qxen-patch-backups\` 下的 ZIP 备份。
+
 也可以把 [`INSTALL_PROMPT_CN.md`](./INSTALL_PROMPT_CN.md) 交给 Codex 或 Luna 执行。
 
 ## 回滚
