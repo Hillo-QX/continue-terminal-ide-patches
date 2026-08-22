@@ -27,11 +27,12 @@ patches/continue-terminal-ide-20260823
    - 将文本文件路径拖进输入框并回车，文件作为附件上下文发送；
    - 原文件没有被移动、复制或覆盖。
 6. 检查安装器输出的 MCP 模板路径：
-   - macOS：`~/.continue/qxen-mcp/config.example.generated.yaml`
-   - Windows：`%USERPROFILE%\.continue\qxen-mcp\config.example.generated.yaml`
+   - macOS：`~/.continue/continue-mcp/config.example.generated.yaml`
+   - Windows：`%USERPROFILE%\.continue\continue-mcp\config.example.generated.yaml`
    将模板中的 `mcpServers` 合并到 Continue 配置后，重启 Continue。
-7. 验收 MCP：工具列表中应出现 `web_search`、`dispatcher_health` 等工具。
-   `Search` 是项目代码搜索，`Fetch` 是已知 URL 抓取；不要把它们当作互联网搜索。
+7. 验收 MCP：工具列表中应出现 `dispatcher_health` 等已连接 MCP 工具。
+   Qwen 的 `enable_search` 是模型提供商能力，不会作为 MCP tool 出现在列表中；
+   `Search` 是项目代码搜索，`Fetch` 是已知 URL 抓取。
 
 约束：
 

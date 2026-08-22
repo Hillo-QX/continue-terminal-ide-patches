@@ -44,7 +44,7 @@ if [[ -d "${PATCH_DIR}/source-overlay/src" ]]; then
   cp -R "${PATCH_DIR}/source-overlay/src/." "${CLI_DIR}/src/"
 fi
 
-MCP_DIR="${HOME}/.continue/qxen-mcp"
+MCP_DIR="${HOME}/.continue/continue-mcp"
 mkdir -p "${MCP_DIR}"
 cp -R "${PATCH_DIR}/mcp/." "${MCP_DIR}/"
 sed "s|__MCP_DIR__|${MCP_DIR}|g" \

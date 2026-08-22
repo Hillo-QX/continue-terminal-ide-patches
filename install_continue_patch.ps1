@@ -50,7 +50,7 @@ if (Test-Path $sourceOverlay) {
     Copy-Item (Join-Path $sourceOverlay "*") (Join-Path $cliDir "src") -Recurse -Force
 }
 
-$mcpDir = Join-Path $env:USERPROFILE ".continue\qxen-mcp"
+$mcpDir = Join-Path $env:USERPROFILE ".continue\continue-mcp"
 New-Item -ItemType Directory -Force -Path $mcpDir | Out-Null
 Copy-Item (Join-Path $PatchDir "mcp\*") $mcpDir -Recurse -Force
 $mcpDirYaml = $mcpDir.Replace("\", "/")

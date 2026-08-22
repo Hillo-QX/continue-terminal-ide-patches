@@ -1,12 +1,6 @@
 # Merge this block into %USERPROFILE%/.continue/config.yaml under mcpServers.
-# The installer replaces __MCP_DIR__ with %USERPROFILE%/.continue/qxen-mcp.
+# The installer replaces __MCP_DIR__ with %USERPROFILE%/.continue/continue-mcp.
 mcpServers:
-  - name: Continue Web Search
-    command: py
-    args:
-      - -3
-      - __MCP_DIR__/web_search_mcp.py
-    connectionTimeout: 30000
   - name: Qwen Dispatcher
     command: py
     args:
