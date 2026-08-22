@@ -46,6 +46,10 @@ import {
 import { uploadArtifactTool } from "./uploadArtifact.js";
 import { writeChecklistTool } from "./writeChecklist.js";
 import { writeFileTool } from "./writeFile.js";
+import {
+  assertToolAuthorised,
+  observeDispatcherResult,
+} from "./dispatcherGate.js";
 
 export type { Tool, ToolCall, ToolParametersSchema };
 
@@ -222,6 +226,7 @@ export async function executeToolCall(
   const startTime = Date.now();
 
   try {
+    assertToolAuthorised(toolCall.name);
     logger.debug("Executing tool", {
       toolName: toolCall.name,
       arguments: toolCall.arguments,
@@ -242,6 +247,7 @@ export async function executeToolCall(
       toolCall.preprocessResult?.args ?? toolCall.arguments,
       context,
     );
+    observeDispatcherResult(toolCall.name, result);
     const duration = Date.now() - startTime;
 
     // Track edits if Git AI is enabled (no-op if not enabled)

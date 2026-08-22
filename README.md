@@ -15,6 +15,8 @@
 - 不生成转换副本，不移动或覆盖原文件。
 - 同步 macOS/Windows 的 Qwen Dispatcher、Compact、Qwen Swarm MCP；
 - 首条消息等待一个有界的 MCP 工具发现窗口，避免工具列表永远少一拍。
+- 工具执行闸门：普通工具必须有 Dispatcher 任务票据，并且工具名必须在
+  `allowed_tool_names` 中；Dispatcher 失败时不再直接回退执行 Bash。
 
 ## 安装
 
@@ -64,3 +66,5 @@ cn --help
 合并 MCP 配置并重启后，应看到 Dispatcher/Compact/Swarm 等 MCP 工具。Qwen 的
 `enable_search` 是模型提供商能力，不会伪装成 Continue 的 MCP tool；Continue 内置的
 `Search` 仍然只用于项目代码搜索，`Fetch` 仍然只抓取已知 URL。
+执行任务时，Dispatcher 必须返回 `task_id`、`execution_grant` 和
+`allowed_tool_names`；缺少任一字段，Continue 会阻止普通工具调用。

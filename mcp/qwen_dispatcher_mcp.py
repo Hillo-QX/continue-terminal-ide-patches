@@ -83,6 +83,7 @@ def _validate_task(value: dict[str, Any], task_id: str) -> dict[str, Any]:
         "task_id": str(value.get("task_id") or task_id or "qwen-task-1")[:120],
         "objective": str(value.get("objective", ""))[:1000],
         "allowed_actions": _bounded_list(value.get("allowed_actions", []), "allowed_actions"),
+        "allowed_tool_names": _bounded_list(value.get("allowed_tool_names", []), "allowed_tool_names"),
         "stop_conditions": _bounded_list(value.get("stop_conditions", []), "stop_conditions"),
         "acceptance_criteria": _bounded_list(value.get("acceptance_criteria", []), "acceptance_criteria"),
         "reason": str(value.get("reason", ""))[:1000],
@@ -91,6 +92,8 @@ def _validate_task(value: dict[str, Any], task_id: str) -> dict[str, Any]:
     }
     if status == "TASK" and not result["objective"]:
         raise ValueError("TASK requires objective")
+    if status == "TASK" and not result["allowed_tool_names"]:
+        raise ValueError("TASK requires allowed_tool_names")
     return result
 
 
@@ -122,8 +125,11 @@ def dispatch_next_task(overall_goal: str, completed_tasks: list[str] | None = No
         value = _ask(
             "You are Qwen3.8 27B acting only as a bounded dispatcher. Return JSON only. "
             "Propose exactly one small next task. Never claim to edit files, run tools, or "
-            "make the final decision. Keep actions and acceptance criteria explicit.",
+            "make the final decision. Keep actions and acceptance criteria explicit. "
+            "allowed_tool_names must contain exact Continue or MCP tool names needed for "
+            "this task, such as Read, Bash, Search, or Fetch.",
             "Return keys status(TASK|DONE|BLOCKED), task_id, objective, allowed_actions, "
+            "allowed_tool_names, "
             "stop_conditions, acceptance_criteria, reason. Input:\n" + prompt,
         )
         result = _validate_task(value, "qwen-task-1")

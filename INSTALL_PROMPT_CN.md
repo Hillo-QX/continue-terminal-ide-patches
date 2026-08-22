@@ -33,6 +33,8 @@ patches/continue-terminal-ide-20260823
 7. 验收 MCP：工具列表中应出现 `dispatcher_health` 等已连接 MCP 工具。
    Qwen 的 `enable_search` 是模型提供商能力，不会作为 MCP tool 出现在列表中；
    `Search` 是项目代码搜索，`Fetch` 是已知 URL 抓取。
+8. 验收执行闸门：没有有效 Dispatcher 任务时直接调用 `Read`、`Bash` 或 MCP
+   工具必须被拒绝；Dispatcher 返回任务后，只有 `allowed_tool_names` 中的工具可以执行。
 
 约束：
 
@@ -42,4 +44,5 @@ patches/continue-terminal-ide-20260823
 - 如果安装失败，保留错误输出，不要删除备份；
 - 只修改 Continue CLI 1.5.47 的补丁目标文件。
 - 不要把真实 API key、token 或个人配置文件提交到 Git；模板中的 secrets 引用保持不变。
+- Dispatcher 失败时不要绕过闸门直接执行 Bash；应报告阻断原因。
 ```

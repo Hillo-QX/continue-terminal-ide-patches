@@ -16,6 +16,8 @@ Continue 配置模板。安装器会把它们复制到：
 4. Python MCP 服务需要 Python 3 和 `mcp` 包：
    `python -m pip install mcp`。
 5. 重启 Continue；首条请求会等待一个有界的 MCP 工具发现窗口。
+6. Dispatcher 返回的任务必须包含 `allowed_tool_names`。Continue 执行层会校验
+   `task_id`、`execution_grant` 和工具白名单；缺少票据时不会执行普通工具。
 
 Qwen 的 `enable_search: true` 属于模型提供商能力，不是 MCP `tools/list` 返回的
 工具；因此它不会以 `web_search` 名称出现在 Continue 的 MCP 工具列表中。Continue
